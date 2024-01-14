@@ -1,9 +1,14 @@
 ﻿@page
 @model Proiect.Pages.HomeModel
 
-<h2>Welcome to the Home Page</h2>
-
-<div>
-    <button onclick="location.href='@Url.Page("/Login")'">Log In</button>
-    <button onclick="location.href='@Url.Page("/Register")'">Register</button>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2 class="mb-4">Welcome to the Home Page</h2>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a class="btn btn-primary mb-2" href="@Url.Page("/Login")">Log In</a>
+                <a class="btn btn-secondary" href="@Url.Page("/Register")">Register</a>
+            </div>
+        </div>
+    </div>
 </div>

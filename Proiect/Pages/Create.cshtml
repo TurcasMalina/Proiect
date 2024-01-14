@@ -5,51 +5,59 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create New Car</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-<h4>Car</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Car.Manufacturer" class="control-label"></label>
-                <input asp-for="Car.Manufacturer" class="form-control" />
-                <span asp-validation-for="Car.Manufacturer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Model" class="control-label"></label>
-                <input asp-for="Car.Model" class="form-control" />
-                <span asp-validation-for="Car.Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.Year" class="control-label"></label>
-                <input asp-for="Car.Year" class="form-control" />
-                <span asp-validation-for="Car.Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.NumberOfKilometers" class="control-label"></label>
-                <input asp-for="Car.NumberOfKilometers" class="form-control" />
-                <span asp-validation-for="Car.NumberOfKilometers" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Car.DealerId" class="control-label">Dealer</label>
-                <select asp-for="Car.DealerId" asp-items="Model.Dealers" class="form-control"></select>
-                <span asp-validation-for="Car.DealerId" class="text-danger"></span>
-            </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="Car.Manufacturer" class="form-label"></label>
+                            <input asp-for="Car.Manufacturer" class="form-control" />
+                            <span asp-validation-for="Car.Manufacturer" class="text-danger"></span>
+                        </div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                        <div class="form-group mb-3">
+                            <label asp-for="Car.Model" class="form-label"></label>
+                            <input asp-for="Car.Model" class="form-control" />
+                            <span asp-validation-for="Car.Model" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Car.Year" class="form-label"></label>
+                            <input asp-for="Car.Year" class="form-control" />
+                            <span asp-validation-for="Car.Year" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Car.NumberOfKilometers" class="form-label"></label>
+                            <input asp-for="Car.NumberOfKilometers" class="form-control" />
+                            <span asp-validation-for="Car.NumberOfKilometers" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="Car.DealerId" class="form-label">Dealer</label>
+                            <select asp-for="Car.DealerId" asp-items="Model.Dealers" class="form-control"></select>
+                            <span asp-validation-for="Car.DealerId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
