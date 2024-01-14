@@ -12,7 +12,7 @@ builder.Services.AddSession(options =>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<CarContext>(options =>
-                options.UseSqlServer("Server=localhost,1433;User Id=sa;Password=ProgramatorLife1623!.;Database=Car;TrustServerCertificate=true;"));
+                options.UseSqlServer("Server=DESKTOP-QCOH0UC;Database=Car;Trusted_Connection=True;TrustServerCertificate=true;"));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICarService, CarService>();
 var app = builder.Build();
