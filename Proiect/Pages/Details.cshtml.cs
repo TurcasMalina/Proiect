@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Proiect.Data;
-using Proiect.Models;
 
 namespace Proiect.Pages
 {
@@ -19,7 +13,7 @@ namespace Proiect.Pages
             _context = context;
         }
 
-      public Car Car { get; set; } = default!; 
+        public CarViewModel Car { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,9 +27,22 @@ namespace Proiect.Pages
             {
                 return NotFound();
             }
-            else 
+            else
             {
-                Car = car;
+                Car = await _context.Cars
+            .Where(x => x.Id == id)
+            .Join(_context.Dealers,
+                  car => car.DealerId,
+                  dealer => dealer.Id,
+                  (car, dealer) => new CarViewModel
+                  {
+                      Manufacturer = car.Manufacturer,
+                      Model = car.Model,
+                      Id = car.Id,
+                      NumberOfKilometers = car.NumberOfKilometers,
+                      Year = car.Year,
+                      DealerName = dealer.Name
+                  }).FirstAsync();
             }
             return Page();
         }

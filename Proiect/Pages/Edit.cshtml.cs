@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Proiect.Models;
 
@@ -16,9 +17,16 @@ namespace Proiect.Pages
 
         [BindProperty]
         public Car Car { get; set; } = default!;
+        public List<SelectListItem> Dealers { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            Dealers = _context.Dealers.Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(),
+                Text = d.Name
+            }).ToList();
+
             var userId = HttpContext.Session.GetInt32("UserId");
             if (id == null || _context.Cars == null || userId == null)
             {
@@ -44,7 +52,6 @@ namespace Proiect.Pages
                 return Page();
             }
             Car.UserId = userId ?? 0;
-            Car.DealerId = 1;
 
             _context.Attach(Car).State = EntityState.Modified;
 

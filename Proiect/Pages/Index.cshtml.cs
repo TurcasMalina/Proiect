@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Proiect.Models;
 
 namespace Proiect.Pages
 {
@@ -14,24 +13,46 @@ namespace Proiect.Pages
             _context = context;
         }
 
-        public IList<Car> Car { get; set; } = default!;
+        public IList<CarViewModel> Car { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (_context.Cars != null)
             {
-                Car = await _context.Cars.Where(x => x.UserId == userId).ToListAsync();
+                Car = await _context.Cars
+            .Where(x => x.UserId == userId)
+            .Join(_context.Dealers,
+                  car => car.DealerId,
+                  dealer => dealer.Id,
+                  (car, dealer) => new CarViewModel
+                  {
+                      Manufacturer = car.Manufacturer,
+                      Model = car.Model,
+                      Id = car.Id,
+                      NumberOfKilometers = car.NumberOfKilometers,
+                      Year = car.Year,
+                      DealerName = dealer.Name
+                  })
+            .ToListAsync();
             }
         }
 
         public async Task<IActionResult> OnPostLogoutAsync()
         {
-            // Clear the session
             HttpContext.Session.Clear();
-
-            // Redirect to the login page
             return RedirectToPage("/Login");
         }
+
+    }
+
+    public class CarViewModel
+    {
+        public int Id { get; set; }
+        public string Manufacturer { get; set; }
+        public string Model { get; set; }
+        public string DealerName { get; set; }
+        public int Year { get; set; }
+        public int NumberOfKilometers { get; set; }
     }
 }

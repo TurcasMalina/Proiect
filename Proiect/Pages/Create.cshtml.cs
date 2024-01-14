@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Proiect.Models;
 
 namespace Proiect.Pages
@@ -15,14 +16,18 @@ namespace Proiect.Pages
 
         public IActionResult OnGet()
         {
+            Dealers =  Dealers = _context.Dealers.Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(),
+                Text = d.Name
+            }).ToList();
             return Page();
         }
 
         [BindProperty]
         public Car Car { get; set; } = default!;
+        public List<SelectListItem> Dealers { get; set; }
 
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid || _context.Cars == null || Car == null)
@@ -31,7 +36,7 @@ namespace Proiect.Pages
             }
 
             Car.UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
-            Car.DealerId = 1;
+
             _context.Cars.Add(Car);
             await _context.SaveChangesAsync();
 

@@ -27,6 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Car[0].NumberOfKilometers)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car[0].DealerName)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -43,6 +46,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumberOfKilometers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DealerName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
